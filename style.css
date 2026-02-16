@@ -1,0 +1,313 @@
+/* Custom font define karna */
+@font-face {
+    font-family: 'AlteredCarbon';
+    src: url('ALTERED_CARBON.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* --- CANVAS BACKGROUND & GENERAL RESET --- */
+* {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; 
+}
+
+/* Canvas styling: Needs to be fixed position, full screen, and in the background (z-index: -1) */
+canvas {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; 
+    background-color: #800880; 
+}
+
+/* --- FORM & ATTENDANCE STYLES --- */
+:root {
+    --primary-color: #07020a; 
+    --card-bg: rgba(255, 255, 255, 0.5); /* Transparent Card Background */
+    --text-color: #333;
+    --placeholder-color: #aaa;
+    --input-border: #ddd;
+   --submit-btn-bg: rgba(128, 8, 128, 0.5); /* 50% transparent purple (#800880) */
+    --submit-btn-hover: rgba(128, 8, 128, 0.7); /* Thoda kam transparent (70% opaque) for hover effect */
+    --error-bg: #ff4d4d; 
+    --success-bg: #4CAF50;
+    --shadow-light: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: radial-gradient(circle at center, rgba(138, 43, 226, 0.4) 0%, rgba(106, 13, 173, 0.6) 100%), var(--primary-color);
+    min-height: 100vh;
+    
+    /* Flexbox for primary centering */
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    
+    color: var(--text-color);
+    overflow-y: auto; 
+    position: relative;
+}
+
+body::before,
+body::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.3;
+    filter: blur(50px);
+}
+
+/* 🟢 KEY CHANGE: Custom Padding for Large Screens 🟢 */
+.main-container {
+    display: none; 
+    padding: 100px 25px; /* Top/Bottom: 100px, Left/Right: 25px */
+    width: 100%;
+    max-width: 500px; /* Max width slightly increased for better centering */
+    z-index: 10; 
+    margin: auto; /* Ensures it stays centered vertically if content is short */
+}
+
+.header-logo-container {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    margin-bottom: 20px;
+    text-align: center; 
+}
+
+.main-logo-icon {
+    display: none;
+}
+
+.header-logo {
+    color: white;
+    font-size: 1.5rem; 
+    font-weight: 600;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    white-space: nowrap; 
+}
+
+.header-logo .fas.fa-play {
+    margin-right: 8px; 
+}
+
+.card-wrap {
+    background: var(--card-bg); 
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease-in-out;
+}
+
+.card-title {
+    text-align: center;
+    color: var(--primary-color);
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 25px;
+}
+
+.card-title .fas {
+    margin-right: 8px;
+}
+
+.attendance-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    position: relative;
+}
+
+.form-group .icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--primary-color);
+    pointer-events: none;
+    font-size: 1rem;
+}
+
+.form-group input,
+.form-group-half input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 15px 12px 45px;
+    border: 1px solid var(--input-border);
+    border-radius: 8px;
+    font-size: 1rem;
+    color: var(--text-color);
+    background-color: white; 
+    transition: all 0.3s;
+}
+
+.form-group-half input {
+    padding: 12px 15px; 
+}
+.form-group textarea {
+    padding: 12px 15px; 
+    min-height: 80px;
+    resize: vertical;
+}
+
+
+.form-group input:focus,
+.form-group-half input:focus,
+.form-group textarea:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(106, 13, 173, 0.2);
+    outline: none;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: var(--placeholder-color);
+    font-weight: 300;
+}
+
+.input-group-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.form-group-half {
+    display: flex;
+    flex-direction: column;
+}
+
+.submit-btn {
+    background-color: var(--submit-btn-bg);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    margin-top: 10px;
+    border-radius: 8px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.submit-btn:hover:not(:disabled) {
+    background-color: var(--submit-btn-hover);
+    transform: translateY(-1px);
+}
+
+.submit-btn:disabled {
+    background-color: #a0a0a0;
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
+.submit-btn .fas {
+    margin-right: 8px;
+}
+
+/* Message Box (Error/Success) */
+.info-message {
+    text-align: center;
+    padding: 12px;
+    margin-top: 20px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: white;
+    display: none;
+}
+
+.info-message.error {
+    background-color: rgba(255, 77, 77, 0.5); /* Transparent Red */
+}
+
+.info-message.success {
+    /* Original color was #4CAF50, which is rgb(76, 175, 80) */
+    background-color: rgba(76, 175, 80, 0.5);
+}
+
+/* --------------------------------- */
+/* ⭐ Loader Styles ⭐ */
+/* --------------------------------- */
+#loader { 
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.95); 
+    display: none; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    z-index: 1000; 
+}
+
+.spinner {
+    border: 6px solid #f3f3f3; 
+    border-top: 6px solid #800880; 
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1.2s linear infinite;
+    margin-bottom: 15px; 
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loader-text {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1em;
+    color: var(--primary-color); 
+    font-weight: 600;
+}
+
+
+/* 📱 RESPONSIVE ADJUSTMENTS */
+@media (max-width: 600px) {
+    /* 🟢 KEY CHANGE: Custom Padding for Small Screens 🟢 */
+    .main-container {
+        padding: 50px 10px; /* Top/Bottom: 50px, Left/Right: 10px */
+        margin: auto; 
+    }
+    
+    .header-logo {
+        font-size: 1.3rem; 
+        text-align: center;
+    }
+    
+    .card-wrap {
+        padding: 25px 20px;
+    }
+    
+    .input-group-grid {
+        grid-template-columns: 1fr; 
+        gap: 15px;
+    }
+}
